@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Trainer</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+    <div class="container">
+        <h1>Morse Trainer</h1>
+        <div id="main-content">
+            <p>Selamat datang! Silakan masukkan nama anda untuk memulai latihan ini.</p>
+            <input type="text" id="username" placeholder="input here">
+            <button onclick="startQuiz()">Mulai</button>
+        </div>
+        <div id="quiz" style="display: none;">
+            
+        </div>
+        <div id="results" style="display: none;">
+            
+        </div>
+    </div>
+
+    <script src="script.js"></script> <!-- Buat file JavaScript terpisah -->
+</body>
+</html>
