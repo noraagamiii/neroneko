@@ -1,0 +1,85 @@
+// Array kata-kata acak
+const words = [
+    "hello",
+    "world",
+    "javascript",
+    "morse",
+    "random",
+    "quiz",
+    "example"
+];
+
+// Fungsi untuk mengonversi teks ke kode Morse
+function textToMorse(text) {
+    const morseCode = {
+        'a': '.-', 'b': '-...', 'c': '-.-.', 'd': '-..', 'e': '.', 'f': '..-.', 'g': '--.', 
+        'h': '....', 'i': '..', 'j': '.---', 'k': '-.-', 'l': '.-..', 'm': '--', 'n': '-.', 
+        'o': '---', 'p': '.--.', 'q': '--.-', 'r': '.-.', 's': '...', 't': '-', 
+        'u': '..-', 'v': '...-', 'w': '.--', 'x': '-..-', 'y': '-.--', 'z': '--..',
+        '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....', 
+        '6': '-....', '7': '--...', '8': '---..', '9': '----.', '0': '-----',
+        ' ': '/'
+    };
+
+    return text.toLowerCase().split('').map(char => morseCode[char] || '').join(' ');
+}
+
+// Fungsi untuk menghasilkan soal acak
+function generateRandomQuestion() {
+    const randomWord = words[Math.floor(Math.random() * words.length)];
+    const question = {
+        word: randomWord,
+        morseCode: textToMorse(randomWord)
+    };
+    return question;
+}
+
+let currentQuestion = 0;
+let score = 0;
+let quizQuestions = [];
+
+function startQuiz() {
+    const username = document.getElementById('username').value;
+    if (username !== '') {
+        document.getElementById('main-content').style.display = 'none';
+        document.getElementById('quiz').style.display = 'block';
+        document.getElementById('results').style.display = 'none';
+
+        // Generate 5 random questions
+        for (let i = 0; i < 5; i++) {
+            quizQuestions.push(generateRandomQuestion());
+        }
+
+        showQuestion();
+    } else {
+        alert('Silakan masukkan nama Anda.');
+    }
+}
+
+function showQuestion() {
+    if (currentQuestion < quizQuestions.length) {
+        const question = quizQuestions[currentQuestion];
+        const userAnswer = prompt(`Kode Morse untuk kata '${question.word}' adalah:`);
+        if (userAnswer !== null) {
+            checkAnswer(userAnswer.trim(), question.morseCode);
+        }
+    } else {
+        showResults();
+    }
+}
+
+function checkAnswer(userAnswer, correctAnswer) {
+    if (userAnswer === correctAnswer) {
+        score++;
+    }
+    currentQuestion++;
+    showQuestion();
+}
+
+function showResults() {
+    document.getElementById('quiz').style.display = 'none';
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('results').innerHTML = `<h2>Hasil Quiz</h2>
+        <p>Hai, ${document.getElementById('username').value}!</p>
+        <p>Skor Anda: ${score} dari ${quizQuestions.length}</p>`;
+}
